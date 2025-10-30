@@ -1,0 +1,96 @@
+[gd_scene load_steps=15 format=3 uid="uid://b0h6xlyni6gnd"]
+
+[ext_resource type="Shader" uid="uid://daj13pvf5x3ej" path="res://GVassets/shaders/glassy.tres" id="1_5xxwi"]
+[ext_resource type="PackedScene" uid="uid://clc5dre31iskm" path="res://addons/godot-xr-tools/xr/start_xr.tscn" id="2_5vc2l"]
+[ext_resource type="PackedScene" uid="uid://d3wnmtlefyc6d" path="res://GVassets/PlayerGV.tscn" id="2_lawes"]
+[ext_resource type="Texture2D" uid="uid://5l7s7ny31b3u" path="res://GVassets/Sky_iiS.jpg" id="3_lfb58"]
+[ext_resource type="PackedScene" uid="uid://dcvg02wi7kdjk" path="res://GVassets/pickle_ball_cube_collision.tscn" id="12_hrcnk"]
+
+[sub_resource type="PanoramaSkyMaterial" id="PanoramaSkyMaterial_m6rx7"]
+panorama = ExtResource("3_lfb58")
+
+[sub_resource type="Sky" id="Sky_48t4u"]
+sky_material = SubResource("PanoramaSkyMaterial_m6rx7")
+
+[sub_resource type="Environment" id="Environment_ceu5d"]
+background_mode = 2
+sky = SubResource("Sky_48t4u")
+ambient_light_source = 3
+ambient_light_color = Color(0.344865, 0.331296, 0.323753, 1)
+ambient_light_sky_contribution = 0.96
+ambient_light_energy = 11.17
+reflected_light_source = 2
+tonemap_mode = 2
+fog_sun_scatter = 0.37
+fog_density = 0.5523
+fog_height = 355.61
+fog_height_density = 16.0
+volumetric_fog_emission = Color(0.841079, 0.306387, 0.701808, 1)
+volumetric_fog_emission_energy = 677.95
+volumetric_fog_gi_inject = 3.98
+volumetric_fog_length = 475.31
+volumetric_fog_ambient_inject = 6.11
+volumetric_fog_sky_affect = 0.849
+
+[sub_resource type="BoxMesh" id="BoxMesh_3en8q"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_75345"]
+render_priority = 0
+shader = ExtResource("1_5xxwi")
+
+[sub_resource type="WorldBoundaryShape3D" id="WorldBoundaryShape3D_qniwx"]
+
+[sub_resource type="ViewportTexture" id="ViewportTexture_tlt83"]
+viewport_path = NodePath("SubViewport")
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_gmo4l"]
+resource_local_to_scene = true
+albedo_texture = SubResource("ViewportTexture_tlt83")
+metallic = 1.0
+
+[sub_resource type="QuadMesh" id="QuadMesh_dvvyl"]
+resource_local_to_scene = true
+material = SubResource("StandardMaterial3D_gmo4l")
+
+[node name="Main" type="Node3D"]
+transform = Transform3D(0.874276, 0, 0, 0, 0.874276, 0, 0, 0, 0.874276, 0, 0, 0)
+
+[node name="StartXR(fixed)" parent="." instance=ExtResource("2_5vc2l")]
+
+[node name="PLAYER XR Node3D" parent="." instance=ExtResource("2_lawes")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.221898, 0)
+
+[node name="WorldEnvironment (change sky to new image or proceddural sky)" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_ceu5d")
+
+[node name="(SUN) DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(0.941099, 0.149319, -0.303374, 0, 0.897211, 0.441601, 0.33813, -0.415591, 0.844365, 0.0358077, 5.48611, 1.82341)
+light_color = Color(1, 1, 0.909804, 1)
+light_indirect_energy = 2.802
+light_volumetric_fog_energy = 3.237
+light_angular_distance = 23.43
+shadow_enabled = true
+
+[node name="(FLOOR) StaticBody3D" type="StaticBody3D" parent="."]
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="(FLOOR) StaticBody3D"]
+transform = Transform3D(17.5063, 0, 0, 0, 0.102072, 0, 0, 0, 17.5063, 0, -0.255082, 0)
+mesh = SubResource("BoxMesh_3en8q")
+surface_material_override/0 = SubResource("ShaderMaterial_75345")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="(FLOOR) StaticBody3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.018617, -0.188919, 0.00243252)
+shape = SubResource("WorldBoundaryShape3D_qniwx")
+
+[node name="Sample Pickable RigidBody with Cube Collider" parent="." instance=ExtResource("12_hrcnk")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.000184893, 1.02208, -2.08293)
+
+[node name="SubViewport" type="SubViewport" parent="."]
+size = Vector2i(1000, 800)
+
+[node name="Camera3D" type="Camera3D" parent="SubViewport"]
+transform = Transform3D(-1, 0, 8.74228e-08, 0, 1, 0, -8.74228e-08, 0, -1, 0, 1.325, -5.609)
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="SubViewport"]
+transform = Transform3D(-5.37739, 0, 0, 0, 4.01612, 0, 0, 0, 1.00403, 0, 1.411, -4.481)
+mesh = SubResource("QuadMesh_dvvyl")
