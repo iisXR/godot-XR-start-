@@ -1,10 +1,10 @@
-[gd_scene load_steps=15 format=3 uid="uid://b0h6xlyni6gnd"]
+[gd_scene load_steps=12 format=3 uid="uid://b0h6xlyni6gnd"]
 
 [ext_resource type="Shader" uid="uid://daj13pvf5x3ej" path="res://GVassets/shaders/glassy.tres" id="1_5xxwi"]
 [ext_resource type="PackedScene" uid="uid://clc5dre31iskm" path="res://addons/godot-xr-tools/xr/start_xr.tscn" id="2_5vc2l"]
 [ext_resource type="PackedScene" uid="uid://d3wnmtlefyc6d" path="res://GVassets/PlayerGV.tscn" id="2_lawes"]
 [ext_resource type="Texture2D" uid="uid://5l7s7ny31b3u" path="res://GVassets/Sky_iiS.jpg" id="3_lfb58"]
-[ext_resource type="PackedScene" uid="uid://dcvg02wi7kdjk" path="res://GVassets/pickle_ball_cube_collision.tscn" id="12_hrcnk"]
+[ext_resource type="PackedScene" uid="uid://dcvg02wi7kdjk" path="res://GVassets/pickle_ball_cube_collision.tscn" id="5_4gi1k"]
 
 [sub_resource type="PanoramaSkyMaterial" id="PanoramaSkyMaterial_m6rx7"]
 panorama = ExtResource("3_lfb58")
@@ -40,18 +40,6 @@ shader = ExtResource("1_5xxwi")
 
 [sub_resource type="WorldBoundaryShape3D" id="WorldBoundaryShape3D_qniwx"]
 
-[sub_resource type="ViewportTexture" id="ViewportTexture_tlt83"]
-viewport_path = NodePath("SubViewport mirror")
-
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_gmo4l"]
-resource_local_to_scene = true
-albedo_texture = SubResource("ViewportTexture_tlt83")
-metallic = 1.0
-
-[sub_resource type="QuadMesh" id="QuadMesh_dvvyl"]
-resource_local_to_scene = true
-material = SubResource("StandardMaterial3D_gmo4l")
-
 [node name="Main" type="Node3D"]
 transform = Transform3D(0.874276, 0, 0, 0, 0.874276, 0, 0, 0, 0.874276, 0, 0, 0)
 
@@ -82,15 +70,5 @@ surface_material_override/0 = SubResource("ShaderMaterial_75345")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.018617, -0.188919, 0.00243252)
 shape = SubResource("WorldBoundaryShape3D_qniwx")
 
-[node name="Sample Pickable RigidBody with Cube Collider" parent="." instance=ExtResource("12_hrcnk")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.000184893, 1.02208, -2.08293)
-
-[node name="SubViewport mirror" type="SubViewport" parent="."]
-size = Vector2i(1000, 800)
-
-[node name="Camera3D" type="Camera3D" parent="SubViewport mirror"]
-transform = Transform3D(-1, 0, 8.74228e-08, 0, 1, 0, -8.74228e-08, 0, -1, 0, 1.325, -5.609)
-
-[node name="MeshInstance3D" type="MeshInstance3D" parent="SubViewport mirror"]
-transform = Transform3D(-5.37739, 0, 0, 0, 4.01612, 0, 0, 0, 1.00403, 0, 1.411, -4.481)
-mesh = SubResource("QuadMesh_dvvyl")
+[node name="PickleBallCubeCollision" parent="." instance=ExtResource("5_4gi1k")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.66899, 0.663626, -1.72942)
