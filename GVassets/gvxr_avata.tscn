@@ -1,0 +1,65 @@
+[gd_scene load_steps=4 format=3 uid="uid://cl656i8uh12aa"]
+
+[ext_resource type="Script" uid="uid://dchvxy6wedds2" path="res://addons/godot-xr-avatar/avatars/avatar_base.gd" id="1_vowc2"]
+[ext_resource type="PackedScene" uid="uid://dxbmg2qplhtco" path="res://GVassets/tealavatar.glb" id="2_vowc2"]
+
+[sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_ngnn0"]
+properties/0/path = NodePath(".:position")
+properties/0/spawn = true
+properties/0/replication_mode = 1
+properties/1/path = NodePath(".:rotation")
+properties/1/spawn = true
+properties/1/replication_mode = 1
+properties/2/path = NodePath("Head:position")
+properties/2/spawn = true
+properties/2/replication_mode = 1
+properties/3/path = NodePath("Head:rotation")
+properties/3/spawn = true
+properties/3/replication_mode = 1
+properties/4/path = NodePath("LeftHand:position")
+properties/4/spawn = true
+properties/4/replication_mode = 1
+properties/5/path = NodePath("LeftHand:rotation")
+properties/5/spawn = true
+properties/5/replication_mode = 1
+properties/6/path = NodePath("RightHand:position")
+properties/6/spawn = true
+properties/6/replication_mode = 1
+properties/7/path = NodePath("RightHand:rotation")
+properties/7/spawn = true
+properties/7/replication_mode = 1
+properties/8/path = NodePath(".:ground_control")
+properties/8/spawn = true
+properties/8/replication_mode = 1
+
+[node name="GVXRAvata" type="Node3D"]
+process_physics_priority = -95
+script = ExtResource("1_vowc2")
+metadata/_custom_type_script = "uid://dchvxy6wedds2"
+
+[node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="."]
+replication_config = SubResource("SceneReplicationConfig_ngnn0")
+public_visibility = false
+
+[node name="Head" type="Marker3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.60601, -0.0789829)
+
+[node name="tealavatar" parent="Head" instance=ExtResource("2_vowc2")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.62700987, 0.0789829)
+
+[node name="AnimationPlayer" parent="Head/tealavatar" index="1"]
+autoplay = "Blinks"
+
+[node name="LeftHand" type="Marker3D" parent="."]
+transform = Transform3D(0.97855, 0.205987, 0.00288357, -0.171756, 0.808046, 0.563526, 0.113749, -0.551934, 0.826093, -0.512, 1.2440001, -0.012000114)
+
+[node name="Target" type="Node3D" parent="LeftHand"]
+transform = Transform3D(0, 3.7252903e-08, -1, 1, -5.9604645e-08, 0, -5.9604645e-08, -1.0000001, -4.4703484e-08, -0.029999971, -0.050000012, 0.17999998)
+
+[node name="RightHand" type="Marker3D" parent="."]
+transform = Transform3D(0.97847, -0.20636, -0.00345756, 0.172383, 0.807925, 0.563508, -0.113492, -0.551972, 0.826103, 0.4989031, 1.2443961, 0.0002950132)
+
+[node name="Target" type="Node3D" parent="RightHand"]
+transform = Transform3D(1.91069e-15, -4.37114e-08, 1, -1, -4.37114e-08, 0, 4.37114e-08, -1, -4.37114e-08, 0.03, -0.05, 0.18)
+
+[editable path="Head/tealavatar"]

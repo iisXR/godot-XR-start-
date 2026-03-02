@@ -1,2 +1,6 @@
+XRController3D
+XRCamera3D
+XROrigin3D
+XRNode3D
 CollisionShape3D
 AnimatableBody3D

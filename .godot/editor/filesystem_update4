@@ -1,4 +1,4 @@
-res://main.tscn
+res://aSCENES/Scene1place.tscn
 res://openxr_action_map.tres
 res://GVassets/shaders/glassy.tres
 res://addons/godot-xr-tools/hands/animations/left/hand_blend_tree.tres
